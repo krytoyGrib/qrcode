@@ -14,13 +14,13 @@ from telegram.ext import (
     CallbackQueryHandler,
 )
 
-# ===== КОНФИГУРАЦИЯ =====
-TOKEN = "8856906549:AAEhzSYr_arBR6sgpsicvS_WBid08KXW-Qw"  # Ваш токен
+# КОНФИГУРАЦИЯ
+TOKEN = "8856906549:AAEhzSYr_arBR6sgpsicvS_WBid08KXW-Qw"  
 
-# Этапы диалога
+
 NAME, PHONE, WAITING_MSG = range(3)
 
-# Тексты (всё на русском)
+# Тексты 
 TEXTS = {
     "welcome": "Привет! Давайте создадим ваш QR-код.\nВведите ваше ФИО:",
     "ask_phone": "Теперь введите ваш белорусский номер телефона в формате +375XXXXXXXXX (например, +375291234567):",
@@ -37,7 +37,7 @@ TEXTS = {
     "help": "🤖 *QR Contact Bot*\n/start – Создать QR-код или посмотреть контакт\n/cancel – Отменить текущую операцию\n/help – Показать эту справку",
 }
 
-# ===== БАЗА ДАННЫХ (SQLite) =====
+# БД
 def init_db():
     conn = sqlite3.connect("bot_data.db")
     c = conn.cursor()
@@ -69,7 +69,7 @@ def get_owner(user_id):
     conn.close()
     return {"name": row[0], "phone": row[1]} if row else None
 
-# ===== ГЕНЕРАЦИЯ QR-КОДА =====
+# QR
 def generate_qr(data: str) -> BytesIO:
     qr = qrcode.QRCode(
         version=1,
@@ -85,7 +85,7 @@ def generate_qr(data: str) -> BytesIO:
     bio.seek(0)
     return bio
 
-# ===== ОБРАБОТЧИКИ =====
+# ОБРАБОТЧИКИ
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     args = context.args
     user_id = update.effective_user.id
